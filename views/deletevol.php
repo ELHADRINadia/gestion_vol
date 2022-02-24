@@ -1,10 +1,10 @@
 <?php
-if(isset($_POST['id_vols'])){
+if(isset($_POST['id'])){
 
-    $test = new ReservationController();
-    $teste = $test->getAllResByIdVol();
+    // $test = new ReservationController();
+    // $teste = $test->getAllResByIdVol();
     if(empty($teste)){
-    $delete= new VolsController();
+    $delete= new volsController();
     $delete->deleteVol();
     }else{
         echo "Impossible!";

@@ -1,0 +1,147 @@
+* {
+    font-family: 'Acme', sans-serif;
+}
+
+body {
+    background: url(../images/vvol.jpg) 100% fixed;
+    margin: 20px 0 0 0;
+}
+
+header {
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 2px;
+}
+
+h1.titre {
+    font-size: 100px;
+    margin-top: 140px;
+    text-transform: uppercase;
+}
+
+h3.slogan {
+    font-size: 35px;
+    font-style: italic;
+}
+
+/* Destinations */
+
+section#destinations {
+    margin: 0px 20% 0 20%;
+}
+
+section#destinations h3 {
+    padding-top: 50px;
+    opacity: 0.5;
+    color: #ffff;
+}
+
+div.destination-item {
+    color: #ffff;
+    height: 300px;
+    margin: 15px;
+    position: relative;
+    flex: 1 0 29%;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+div.destination-item:hover {
+    transform: scale(0.98);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: 0.2s all;
+}
+
+div.destinations-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.barcelone { background: url(../images/balance.jpg); }
+.dubai { background: url(../images/Dubai.jpg); }
+.londres { background: url(../images/London.jpg); }
+.paris { background: url(../images/paris.jpg); }
+.philippines { background: url(../images/Manille.png); }
+.Turky { background: url(../images/Turky.jpg); }
+
+.overlay { 
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+span.nom {
+    position: relative;
+    color: #373737;
+    background-color: #DBDBD9;
+    top: 20px;
+    float: right;
+    padding: 12px;
+    font-size: 22px;
+}
+
+span.prix {
+    position: relative;
+    color: #fff;
+    background-color: #548CFF;
+    padding: 12px;
+    font-size: 25px;
+    top: 220px;
+}
+
+/* Formulaire de recherche */
+
+header form {
+    background-color: #548CFF;
+    padding: 20px;
+}
+
+.search-form {
+    transform: translateY(75px);
+}
+
+.form-group {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin: 10px;
+}
+
+.form-group input, select, option{
+    border: none;
+    padding: 5px;
+    background-color: bisque;
+}
+
+.form-group label {
+    margin: 5px;
+    padding: 10px;
+}
+
+.button-submit{
+    text-align: center;
+}
+
+.button-submit input {
+    background-color: #373737;
+    border: none;
+    color: #DBDBD9;
+    font-size: 25px;
+    margin-top: 15px;
+}
+
+/* Pied de page */
+
+footer p {
+    text-align: center;
+    color: #373737;
+    padding: 10px;
+}

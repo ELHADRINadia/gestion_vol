@@ -4,7 +4,7 @@ require_once './autoload.php';
 require_once './controllers/HomeController.php';
 
 $home = new HomeController();
-$pages = [ 'home', 'add', 'update', 'delete', 'dashboard' ];
+$pages = [ 'home', 'add', 'updatevol', 'deletevol', 'dashboard','Reservation', 'updateres', 'deleteres',  'registre', 'login'];
 
 if ( isset( $_GET[ 'page' ] ) ) {
     if ( in_array( $_GET[ 'page' ], $pages ) ) {
@@ -19,3 +19,4 @@ if ( isset( $_GET[ 'page' ] ) ) {
 ?>
 <?php
 require_once './views/includes/footer.php';
+?>

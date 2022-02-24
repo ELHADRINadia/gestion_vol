@@ -76,7 +76,22 @@ class Vol
         }
         $statement = null;
     }
+    public static function delete($data)
+    {
+        try {
+            $query = 'DELETE FROM vol WHERE id = :id';
+            $supp = DB::connect()->prepare($query);
+            $supp->execute(array(":id" => $data['id']));
+            if ($supp->execute()) {
+                return 'ok';
+            }
+        } catch (PDOException $ex) {
+            echo 'erreur' . $ex->getMessage();
+        }
+    }
 }
+
+
 
 
 

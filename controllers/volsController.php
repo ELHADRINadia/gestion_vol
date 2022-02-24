@@ -56,4 +56,16 @@ class VolsController
                 }
             }
         }
+        public function deleteVol()
+        {
+            if (isset($_POST['id_vols'])) {
+                $data['id_vols'] = $_POST['id_vols'];
+                $result = Vol::delete($data);
+                if ($result === 'ok') {
+                    Redirect::to('dashbord');
+                } else {
+                    echo $result;
+                }
+            }
+        }
     }
