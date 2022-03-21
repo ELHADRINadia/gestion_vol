@@ -17,6 +17,14 @@ class VolsController
         }
         $vol = Vol::getOneVol($data);
         return $vol;
+        // var_dump($data);
+    }
+    public function findVol(){
+        if (isset($_POST['find'])){
+            $data = array('search' => $_POST['find']);
+        }
+        $vols = Vol::searchVol($data);
+        return $vols; 
     }
     public function addVol()
     {
@@ -26,31 +34,36 @@ class VolsController
                             'Date_arrive' => $_POST[ 'Date_arrive' ],
                             'ville_depart' => $_POST[ 'ville_depart' ],
                             'ville_arrive' => $_POST[ 'ville_arrive' ],
+                            'ville_arrive' => $_POST[ 'ville_arrive' ],
+                                    'prix' => $_POST['prix'],
                             'Etat_vol' => $_POST['Etat_vol'],
+
                         );
                         $resultat = Vol::add( $data );
                         if ( $resultat === 'ok' ) {
+                            Session::set('success','Vol ajouter');
                             Redirect::to('dashboard');
                         } else {
                             echo $resultat;
                         }
                     }
         }
-        public function updateVols(){
+        public function updateVol(){  
             if(isset($_POST['submit'])){
                 $data = array(
-                    'id_vols' => $_POST['id'],
-                    'Date_depart' => $_POST['dateDepart'],
-                    'Date_arrive' => $_POST['dateArrive'],
-                    'Ville_depart' => $_POST['VilleDepart'],
-                    'Ville_arrive' => $_POST['VilleArrive'],
-                    'Etat_de_vole' => $_POST['etatVols'],
+                    'id' => $_POST['id'],
+                    'Date_depart' => $_POST[ 'Date_depart' ],
+                            'Date_arrive' => $_POST[ 'Date_arrive' ],
+                            'ville_depart' => $_POST[ 'ville_depart' ],
+                            'ville_arrive' => $_POST[ 'ville_arrive' ],
+                            'prix' => $_POST[ 'prix' ],
+                            'Etat_vol' => $_POST['Etat_vol'],
                     
                 );
-                $resultat = vol::update($data);
+                $resultat = Vol::update($data);
                 if($resultat == 'ok'){
-                    //  header('location:'.BASE_URL);
-                    Redirect::to('dashbord');
+                    Session::set('success','Vol modifier');
+                    Redirect::to('dashboard');
                 }else{
                     echo "error";
                 }
@@ -58,14 +71,16 @@ class VolsController
         }
         public function deleteVol()
         {
-            if (isset($_POST['id_vols'])) {
-                $data['id_vols'] = $_POST['id_vols'];
-                $result = Vol::delete($data);
+            if (isset($_POST['id'])) {
+                $data['id'] = $_POST['id'];
+                $result = vol::delete($data);
                 if ($result === 'ok') {
-                    Redirect::to('dashbord');
+                    Session::set('success','Vol supprimer');
+                    Redirect::to('dashboard');
                 } else {
                     echo $result;
                 }
             }
         }
+      
     }

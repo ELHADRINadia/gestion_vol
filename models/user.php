@@ -5,11 +5,12 @@ class User
 
     public static function createUser($data)
     {
-        $statement = DB::connect()->prepare('INSERT INTO users (role,username,password,name,email) VALUES ("user", :username,:password,:name,:email)');
-        $statement->bindParam(':username', $data['username']);
-        $statement->bindParam(':password', $data['password']);
-        $statement->bindParam(':name', $data['name']);
+        $statement = DB::connect()->prepare('INSERT INTO user (role,Last_name,First_name,email,password) VALUES ("user", :Last_name,:First_name,:email,:password)');
+        $statement->bindParam(':Last_name', $data['Last_name']);
+        $statement->bindParam(':First_name', $data['First_name']);
         $statement->bindParam(':email', $data['email']);
+        $statement->bindParam(':password', $data['password']);
+        
 
         if ($statement->execute()) {
             return 'good';
@@ -22,10 +23,11 @@ class User
 
     public static function login($data)
     {
-        // $username = $data['username'];
         try {
-            $query = "SELECT * FROM users WHERE username = '$data'";
+            $query = "SELECT * FROM user WHERE email = :email AND password = :password";
             $statement = DB::connect()->prepare($query);
+            $statement->bindParam(':password', $data['password']);
+            $statement->bindParam(':email', $data['email']);
             $statement->execute();
             // array(":username" => $username)
             $user = $statement->fetch(PDO::FETCH_OBJ);
@@ -41,7 +43,7 @@ class User
     {
         $id = $data['id'];
         try {
-            $query = 'SELECT * FROM users WHERE id=:id';
+            $query = 'SELECT * FROM user WHERE id=:id';
             $statement = DB::connect()->prepare($query);
             $statement->execute(array(":id" => $id));
             $vol = $statement->fetch(PDO::FETCH_OBJ);

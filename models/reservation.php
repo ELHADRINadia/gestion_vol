@@ -4,10 +4,13 @@ class Reservations
 
     public static function getAll()
     {
-        $statement = DB::connect()->prepare('SELECT * FROM reservation');
+        $statement = DB::connect()->prepare('SELECT reservation.id,Date_depart,ville_depart,Date_arrive,ville_arrive,username,nombre_passager FROM reservation LEFT JOIN vol ON reservation.id_vols = vol.id ');
         $statement->execute();
+        // $res = $statement->fetchAll();
+        // echo "<pre>";
+        // var_dump($res);
         return $statement->fetchAll();
-        $statement = null;
+        // $statement = null;
     }
 
     public static function getAllById($idUser)
@@ -26,16 +29,16 @@ class Reservations
         $AllByIdVols = null;
     }
 
-    public static function addReservations($data, $nbr)
+    public static function addreservations($data)
     {
 
-       
-
-       
-        $statement = DB::connect()->prepare("INSERT INTO reservation (nbr_reservation,id_vols ,id ) VALUES (? ,? ,? )");
-        
-        if ($statement->execute([$nbr, $data, $_SESSION['id']])) {
-            $statement = DB::connect()->prepare("SELECT MAX(id_reservation) as id_reservation FROM reservation");
+        $statement = DB::connect()->prepare("INSERT INTO reservation (id_vols,username,nombre_passager,categorie) VALUES (:id_vols, :username,:nombre_passager, :categorie)");
+        $statement->bindParam( ':id_vols', $data[ 'id_vols' ] );
+        $statement->bindParam( ':username', $data[ 'username' ] );
+        $statement->bindParam( ':nombre_passager', $data[ 'nombre_passager' ] );
+        $statement->bindParam( ':categorie', $data[ 'categorie' ] );
+        if ($statement->execute()) {
+            $statement = DB::connect()->prepare("SELECT MAX(id) as id FROM reservation");
             $statement->execute();
             $id = $statement->fetch(PDO::FETCH_OBJ);
             return $id;
@@ -50,7 +53,7 @@ class Reservations
     {
        
         try {
-            $query = 'DELETE FROM reservation WHERE id_reservation = :id_res';
+            $query = 'DELETE FROM reservation WHERE id = :id_res';
             $supp = DB::connect()->prepare($query);
             $supp->execute(array(":id_res" => $data));
             if ($supp->execute()) {
@@ -59,23 +62,5 @@ class Reservations
         } catch (PDOException $ex) {
             echo 'erreur' . $ex->getMessage();
         }
-    }
-}
-
-class passager
-{
-    public static function addpassager($data)
-    {
-        $nop = $data['nbrPersonne'];
-        $prenom = $data['prenom'];
-        $dateNaissance = $data['dateNaissance'];
-        $id = $data['id_reservation'];
-        $nom = $data['nom'];
-        for ($i = 0; $i < $nop; $i++) {
-            $sql = "INSERT INTO voyageurs (id,prenom,nom,date_naissance) VALUES ('$prenom[$i]','$nom[$i]','$dateNaissance[$i]','$id')";
-            $statement = DB::connect()->prepare($sql);
-            $statement->execute();
-        }
-
     }
 }

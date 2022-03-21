@@ -1,3 +1,23 @@
+<?php
+// var_dump($_POST);
+if (isset($_POST['id'])) {
+    // print_r($_POST);
+    $exitVol = new volsController();
+    $res = $exitVol->getOneVol();
+
+// var_dump($res);
+   
+}
+elseif (isset($_POST['submit'])) {
+    $newVol = new ReservationController();
+    $newVol->addreservations();
+    Redirect::to('dashReservation');
+}
+else {
+    Redirect::to('dashUser');
+}
+
+?>
 <!DOCTYPE html> 
 <html>
     <head>
@@ -27,50 +47,42 @@
                 <form method="post">
                                 
                     <div class="form-group">
+                        <label for="provenance">Username</label>
+                        <input type="text" name="username" id="user" placeholder="enter votre nom"  >
                         <label for="provenance">Ville de départ</label>
-                        <input type="text" name="provenance" id="provenance" placeholder="casa, marrackech, ...">
+                        <input type="text" name="provenance" id="provenance" placeholder="casa, marrackech, ..."  value="<?php echo $res->ville_depart ?>">
 
                         <label for="arrivee">Ville d'arrivée</label>
-                        <input type="text" name="arrivee" id="arrivee" placeholder="Paris, Milan, ...">
+                        <input type="text" name="arrivee" id="arrivee" placeholder="Paris, Milan, ..." value="<?php echo $res->ville_arrive ?>">
                     </div>
 
                     <div class="form-group">
-                        <label for="depart">Date de départ</label>
-                        <input type="date" name="depart" id="depart" value="20/02/2022">
+                        <label for="depart">Date_départ</label>
+                        <input type="text" name="Date_depart" class="form-control" placeholder="Date Depart" value="<?php echo $res->Date_depart ?>">
+                    <input type="hidden" name="id_vols" value="<?= $res->id ?>">
 
-                        <label for="retour">Date de Retour</label>
-                        <input type="date" name="retour" id="retour" value="24/02/2022">
+                        <label for="retour">Date_Rotour</label>
+                        <input type="text" name="Date_arrive" class="form-control" placeholder="Date d'arrivé" value="<?php echo $res->Date_arrive ?>">
                     </div>
 
                     <div class="form-group">
-                        <label for="adultes">Nombre d'adultes</label>
-                        <select name="adultes" id="adultes">
-                            <option selected="selected">0 Adulte</option>
-                            <option>1 Adulte</option>
-                            <option>2 Adultes</option>
-                            <option>3 Adultes</option>
-                            <option>4 Adultes</option>
-                            <option>5 Adultes</option>
+                        <label for="adultes">Nombre de passager</label>
+                        <select name="nombre_passager" id="adultes">
+                            <option selected="selected">0 passager</option>
+                            <option>1 passager </option>
+                            <option>2 passager</option>
+                            <option>3 passager</option>
+                            <option>4 passager</option>
+                            <option>5 passager</option>
                         </select>
-
-                        <label for="enfants">Nombre d'enfants</label>
-                        <select name="enfants" id="enfants">
-                            <option selected="selected">0 Enfant</option>
-                            <option>1 Enfant</option>
-                            <option>2 Enfants</option>
-                            <option>3 Enfants</option>
-                            <option>4 Enfants</option>
-                            <option>5 Enfants</option>
-                        </select>
-
                         <label for="type">Categorie</label>
-                        <select name="type" id="type">
+                        <select name="categorie" id="type">
                             <option selected="selected">Classe Economique</option>
                             <option>Classe Affaires</option>
                         </select>
                     </div>
 
-                    <div class="button-submit">
+                    <div class="button-submit"> 
                     <button type="submit" class=" btn btn-primary" name="submit">Lancer la reservation</button>
                     </div>
                     

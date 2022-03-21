@@ -37,6 +37,11 @@ if (isset($_POST['submit'])) {
                                 <input type="text" name="ville_arrive" class="form-control" placeholder="Date d'arrivé">
                             </div>
 
+                            <div class="form-group">
+                                <label for="">prix</label>
+                                <input type="text" name="prix" class="form-control" placeholder="prix">
+                            </div>
+
 
                             <div class="form-group ">
                             <label for="action">Etat de vol*</label>

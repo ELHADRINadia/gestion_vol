@@ -1,21 +1,24 @@
 <?php
+
 if ($_SESSION) {
     // var_dump($_SESSION);
-    if ($_SESSION['role'] !== "admin") {
+    if ($_SESSION['role'] !== "user") {
         Redirect::to('home');
     }
 }else{
     Redirect::to('home');
 }
-if (isset($_POST['find'])){ 
-$data = new VolsController();
-$vols = $data->findVol();
-// print_r($vols);
-}
-else {
 $data = new volsController();
 $vols = $data->getAllVol();
-}
+if (isset($_POST['find'])){ 
+    $data = new VolsController();
+    $vols = $data->findVol();
+    // print_r($vols);
+    }
+    else {
+    $data = new volsController();
+    $vols = $data->getAllVol();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,43 +28,37 @@ $vols = $data->getAllVol();
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard Admin</title>
+        <title>Dashboard -User's</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <!-- <link href="public/css/style.css" rel="stylesheet" /> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-    </head>   
+    </head>
     <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="#">Dashboard</a>
-            <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-            <!-- Navbar Search-->
-            <form method="post" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container">
+          <a class="navbar-brand" href="home">Vols</a>
+          <button class="navbar-toggler" type="button">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav mr-auto">
+                  <!-- <li class="nav-item active"><a class="nav-link" href="./search">Search Vol</a></li> -->
+                  <li class="nav-item"><a class="nav-link" href="<?php BASE_URL;?> dashReservation">mes Reservations</a></li>
+                  <li class=" text-right nav-item "><a class="nav-link" href="logout"> Log Out</a></li>
+                  <form method="post" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
                     <input class="form-control" name="find" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
                     <button class="btn btn-primary" id="btnNavbarSearch" name="submit" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </form>
-            <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="<?php BASE_URL;?> dashReservation">dashReservation</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="<?php BASE_URL;?> logout">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-           
+              </ul>
+          </div>
+      </div>
+  </nav>
 <div class="wrapper">
     <div class="row ">
         <div class="card-body bg-light pt-6">
-                 <a href="<?php echo BASE_URL; ?>add" class="btn btn-sm btn-primary mr-2 mb-2">
-                        <i class="fas fa-plus"></i>
-                    </a>
+               
                     <table class="table table-dark table-striped table-hover">
                         <thead>
                             <tr>
@@ -69,7 +66,6 @@ $vols = $data->getAllVol();
                                 <th scope="col">Date arrive</th>
                                 <th scope="col">Ville depart</th>
                                 <th scope="col">Ville arrive</th>
-                                <th scope="col">prix</th>
                                 <th scope="col">Etat vol</th>
                                 <th scope="col">action</th>
                             </tr>
@@ -82,23 +78,15 @@ $vols = $data->getAllVol();
                                     <td><?php echo $V['Date_arrive']; ?></td>
                                     <td><?php echo $V['ville_depart']; ?></td>
                                     <td><?php echo $V['ville_arrive']; ?></td>
-                                    <td><?php echo $V['prix']; ?></td>
                                     <td>
                                         <?php echo $V['Etat_vol'] ? '<span class="badge badge-success">Ouvert</span>' : '<span class="badge badge-danger">Fermer</span>'; ?>
-                                    </td>
+                                    </td> 
                                     <!-- actions -->
                                     <td class="d-flex flex-row">
                                         <!-- update without php cuz in url there's only update thanks to autoload -->
-                                        <form method="post" action="<?php BASE_URL;?> updatevol" class="mr-1">
+                                        <form method="post" action="<?php BASE_URL;?> Reservation" class="mr-1">
                                             <input type="hidden" name="id" value="<?php echo $V['id']; ?>">
-                                            <button class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </button>
-                                        </form>
-                                    </td>
-
-                                    <td>
-                                        <form method="post" action="deletevol" class="mr-1">
-                                            <input type="hidden" name="id" value="<?php echo $V['id']; ?>">
-                                            <button class="btn btn-sm btn-danger"> <i class="fa fa-trash"></i> </button>
+                                            <button class="btn btn-warning"> Reserve maintenant </button>
                                         </form>
                                     </td>
                                     <!-- end actions -->

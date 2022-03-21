@@ -3,7 +3,7 @@
 }
 
 body {
-    background: url(../images/vvol.jpg) 100% fixed;
+    background: url(../images/vol.jpg) 100% fixed;
     margin: 20px 0 0 0;
 }
 
@@ -19,7 +19,7 @@ header {
 h1.titre {
     font-size: 100px;
     margin-top: 140px;
-    text-transform: uppercase;
+    text-transform:   uppercase;
 }
 
 h3.slogan {
@@ -90,7 +90,7 @@ span.nom {
 span.prix {
     position: relative;
     color: #fff;
-    background-color: #548CFF;
+    background-color: #051367;
     padding: 12px;
     font-size: 25px;
     top: 220px;
@@ -99,12 +99,13 @@ span.prix {
 /* Formulaire de recherche */
 
 header form {
-    background-color: #548CFF;
+    background-color: #051367;
     padding: 20px;
 }
 
 .search-form {
     transform: translateY(75px);
+    background-color: #051367;
 }
 
 .form-group {
@@ -118,7 +119,7 @@ header form {
 .form-group input, select, option{
     border: none;
     padding: 5px;
-    background-color: bisque;
+    background-color: #DFF6FF;
 }
 
 .form-group label {
@@ -133,7 +134,7 @@ header form {
 .button-submit input {
     background-color: #373737;
     border: none;
-    color: #DBDBD9;
+    color: #DFF6FF;
     font-size: 25px;
     margin-top: 15px;
 }

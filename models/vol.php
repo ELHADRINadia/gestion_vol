@@ -2,7 +2,7 @@
 
 class Vol
 {
-
+ 
     static public function getAll()
     {
         try{
@@ -14,9 +14,9 @@ class Vol
     catch (\PDOException$th) {
         throw $th;
     }
-     // $stmt = null;
+    
 }
-    static public function getVol($data){
+    static public function getOneVol($data){
         $id =$data['id'];
         try{
             $query = 'SELECT *FROM vol WHERE id=:id';
@@ -29,66 +29,66 @@ class Vol
         }
     }
     static public function add( $data ){
-        $stmt = DB::connect()->prepare('INSERT INTO vol (Date_depart, Date_arrive, ville_depart, ville_arrive, Etat_vol)VALUES (:Date_depart, :Date_arrive, :ville_depart, :ville_arrive, :Etat_vol)');
+        $stmt = DB::connect()->prepare('INSERT INTO vol (Date_depart, Date_arrive, ville_depart, ville_arrive, prix, Etat_vol)VALUES (:Date_depart, :Date_arrive, :ville_depart, :ville_arrive, :prix, :Etat_vol)');
         $stmt->bindParam( ':Date_depart', $data[ 'Date_depart' ] );
         $stmt->bindParam( ':Date_arrive', $data[ 'Date_arrive' ] );
         $stmt->bindParam( ':ville_depart', $data[ 'ville_depart' ] );
         $stmt->bindParam( ':ville_arrive', $data[ 'ville_arrive' ] );
+        $stmt->bindParam( ':prix', $data[ 'prix' ] );
         $stmt->bindParam( ':Etat_vol', $data[ 'Etat_vol' ] );
-
+  var_dump($data);
         if ($stmt->execute()) {
             return 'ok';
         } else {
             return 'error';
         }
-        $stmt->close();
-        $stmt->null();
+        // $stmt->close();
+        // $stmt->null();
 
     }
-    public static function update($data)
-    {
-        print_r($data);
-        $statement = DB::connect()->prepare(
-            "UPDATE vol
-            SET
-            id_vols=:id,
-            Date_depart =:Date_depart ,
-            Date_arrive =:Date_arrive ,
-            Ville_depart =:Ville_depart ,
-            Ville_arrive =:Ville_arrive ,
-            Etat_vol =:Etat_vol,
-            WHERE id_vols = :id_vols
-        "
-        );
-        $statement->bindParam('id', $data['id']);
-        $statement->bindParam('Date_depart', $data['Date_depart']);
-        $statement->bindParam('Date_arrive', $data['Date_arrive']);
-        $statement->bindParam('Ville_depart', $data['Ville_depart']);
-        $statement->bindParam('Ville_arrive', $data['Ville_arrive']);
-        $statement->bindParam('Etat_vol', $data['Etat_vol']);
-        $statement->bindParam('id', $data['id']);
-        $statement = $statement->execute();
-
-        if ($statement) {
+    static public function update( $data ){
+        $stmt = DB::connect()->prepare('UPDATE vol SET Date_depart = :Date_depart , Date_arrive =:Date_arrive , ville_depart = :ville_depart, ville_arrive = :ville_arrive , prix = :prix, Etat_vol =  :Etat_vol WHERE id =:id ');
+        $stmt->bindParam( ':id', $data[ 'id' ] );
+        $stmt->bindParam( ':Date_depart', $data[ 'Date_depart' ] );
+        $stmt->bindParam( ':Date_arrive', $data[ 'Date_arrive' ] );
+        $stmt->bindParam( ':ville_depart', $data[ 'ville_depart' ] );
+        $stmt->bindParam( ':ville_arrive', $data[ 'ville_arrive' ] );
+        $stmt->bindParam( ':prix', $data[ 'prix' ] );
+        $stmt->bindParam( ':Etat_vol', $data[ 'Etat_vol' ] );
+  
+        if ($stmt->execute()) {
             return 'ok';
         } else {
             return 'error';
         }
-        $statement = null;
-    }
-    public static function delete($data)
+
+    }public static function delete($data)
     {
         try {
             $query = 'DELETE FROM vol WHERE id = :id';
-            $supp = DB::connect()->prepare($query);
-            $supp->execute(array(":id" => $data['id']));
-            if ($supp->execute()) {
+            $del = DB::connect()->prepare($query);
+            $del->execute(array(":id" => $data['id']));
+            if ($del->execute()) {
                 return 'ok';
             }
         } catch (PDOException $ex) {
             echo 'erreur' . $ex->getMessage();
         }
     }
+    static public function searchVol($data){
+        $search =$data['search'];
+        // die(var_dump($data));//do you arrive data 
+        try{
+            $query ='SELECT * FROM vol WHERE ville_depart LIKE ? OR ville_arrive LIKE ?';
+            $stmt =Db::connect()->prepare($query);
+            $stmt->execute(array('%'.$search.'%','%'.$search.'%'));
+            $vols = $stmt -> fetchAll();
+            return  $vols ;
+        }
+        catch(PDOException $ex){
+            echo 'error' . $ex->getMessage();
+        }
+    }  
 }
 
 

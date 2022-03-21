@@ -1,8 +1,7 @@
 <?php
-require './models/reservation.php';
-class ReservationController
+ require './models/reservation.php';
+ class ReservationController
 {
-
     public function deleteReservation()
     {
         if (isset($_POST['id_reserv'])) {
@@ -16,16 +15,17 @@ class ReservationController
         }
     }
 
-    public function ajoutereservations()
+    public function addreservations()
     {
-       
-        if (isset($_POST['reserve'])) {
-            $vol = new VolsController();
-            $vol = $_POST['id_vol'];
-            $nbr = $_POST['nbrPersonne'];
-            $result = Reservations::addReservations($vol, $nbr);
+        if (isset($_POST['submit'])) {
+            $data['id_vols'] = $_POST['id_vols'];
+            $data['username'] = $_POST['username'];
+            $data['nombre_passager'] = $_POST['nombre_passager'];
+            $data['categorie'] = $_POST['categorie'];
+            // var_dump($vol);
+            $result = Reservations::addreservations($data);
+
             return $result;
-            
         }
     }
 
@@ -51,19 +51,17 @@ class ReservationController
     }
 
 
-    public function ajoutepassager($id)
-    {
-        $nom = $_POST['nom'];
-        $prenom = $_POST['prenom'];
-        $dateNaissance = $_POST['dateNaissance'];
-        $reservations = passager::addpassager($id, $nom, $prenom, $dateNaissance);
-    }
-    static public function ajouteMultipassager($id)
-    {
-        $data=$_POST;
+    // public function ajoutepassager($id)
+    // {
+    //     $nom = $_POST['nom'];
+    //     $prenom = $_POST['prenom'];
+    //     $dateNaissance = $_POST['dateNaissance'];
+    //     $reservations = passager::addpassager($id, $nom, $prenom, $dateNaissance);
+    // }
+    // static public function ajouteMultipassager($id)
+    // {
+    //     $data=$_POST;
         
-        passager::addpassager($data);
-                        Redirect::to('home');
-
-    }
+    //     passager::addpassager($data);
+    //                     Redirect::to('home');
 }
