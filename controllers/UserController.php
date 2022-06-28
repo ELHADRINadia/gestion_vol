@@ -17,7 +17,7 @@ class UserController
             echo "Incorrect !";
             return;
         }
-        var_dump($result);
+        // var_dump($result);
         if ($result->email == $_POST['email'] && $_POST['password'] == $result->password) {
             $_SESSION['logged'] = true;
             $_SESSION['email'] = $result->email;
